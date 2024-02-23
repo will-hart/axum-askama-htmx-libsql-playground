@@ -1,23 +1,17 @@
-use std::{
-    net::SocketAddr,
-    sync::{Arc, Mutex},
-};
+use std::net::SocketAddr;
 
 use axum::{
-    extract::{MatchedPath, Request, State},
+    extract::{MatchedPath, Request},
     routing::{get, post},
     Router,
 };
-use maud::{html, Markup, PreEscaped, DOCTYPE};
 use tokio::net::TcpListener;
 use tower_http::trace::TraceLayer;
 use tracing::{info, info_span};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
-#[derive(Clone, Default)]
-struct AppState {
-    pub counter: Arc<Mutex<u16>>,
-}
+mod state;
+mod webroutes;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -30,9 +24,9 @@ async fn main() -> anyhow::Result<()> {
         .init();
 
     let app = Router::new()
-        .route("/", get(home))
-        .route("/increment", post(increment))
-        .route("/reset", post(reset))
+        .route("/", get(webroutes::home))
+        .route("/increment", post(state::increment))
+        .route("/reset", post(state::reset))
         .layer(
             TraceLayer::new_for_http().make_span_with(|request: &Request<_>| {
                 // Log the matched route's path (with placeholders not filled in).
@@ -50,7 +44,7 @@ async fn main() -> anyhow::Result<()> {
                 )
             }),
         )
-        .with_state(AppState::default());
+        .with_state(state::AppState::default());
 
     let addr: SocketAddr = "0.0.0.0:8011".parse().unwrap();
     let listener = TcpListener::bind(addr).await?;
@@ -59,51 +53,4 @@ async fn main() -> anyhow::Result<()> {
     axum::serve(listener, app).await?;
 
     Ok(())
-}
-
-async fn home() -> Markup {
-    html!(
-        (DOCTYPE)
-        html {
-            head {
-                (PreEscaped("<script src=\"https://unpkg.com/htmx.org@1.9.10\" crossorigin=\"anonymous\"></script>"))
-                (PreEscaped("<style>.leftpad { margin-left: 1em; }</style>"))
-                title { "Fred" }
-            }
-            body {
-                .intro {
-                    span { "Counter " }
-                    span #targetme { "0" }
-
-                    button.leftpad hx-post="/increment" hx-target="#targetme" hx-swap="innerHTML" {
-                        "Increment"
-                    }
-
-                    button.leftpad hx-post="/reset" hx-target="#targetme" hx-swap="innerHTML" {
-                        "Reset"
-                    }
-                }
-            }
-        }
-    )
-}
-
-async fn increment(state: State<AppState>) -> Markup {
-    {
-        *state.counter.lock().unwrap() += 1;
-    }
-
-    html! {
-        (state.counter.lock().unwrap())
-    }
-}
-
-async fn reset(state: State<AppState>) -> Markup {
-    {
-        *state.counter.lock().unwrap() = 0;
-    }
-
-    html! {
-        (state.counter.lock().unwrap())
-    }
 }
