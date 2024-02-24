@@ -12,15 +12,30 @@ pub(crate) async fn home() -> Markup {
             body {
                 .intro {
                     span { "Counter " }
-                    span #targetme { "0" }
+                    span.counter-button #targetme { "0" }
+                    span.htmx-indicator #spinner { " Saving" }
 
-                    button.leftpad hx-post="/increment" hx-target="#targetme" hx-swap="innerHTML" {
+                    button.leftpad.counter-button
+                        hx-post="/increment"
+                        hx-indicator="#spinner"
+                        hx-disabled-elt=".counter-button"
+                        hx-target="#targetme"
+                        hx-swap="innerHTML"
+                    {
                         "Increment"
                     }
 
-                    button.leftpad hx-post="/reset" hx-target="#targetme" hx-swap="innerHTML" {
+                    button.leftpad.counter-button
+                        hx-post="/reset"
+                        hx-indicator="#spinner"
+                        hx-disabled-elt=".counter-button"
+                        hx-target="#targetme"
+                        hx-swap="innerHTML"
+                    {
                         "Reset"
                     }
+
+
                 }
             }
         }
