@@ -11,8 +11,8 @@ mod state;
 async fn main() -> shuttle_axum::ShuttleAxum {
     let app = Router::new()
         .route("/", get(routes::home_route_handler))
-        .route("/increment", post(state::increment))
-        .route("/reset", post(state::reset))
+        .route("/increment", post(routes::increment_mutation))
+        .route("/reset", post(routes::reset_mutation))
         .with_state(state::AppState::default());
 
     Ok(app.into())
