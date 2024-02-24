@@ -4,7 +4,7 @@ use super::{
 };
 use maud::{html, Markup, DOCTYPE};
 
-pub(crate) fn home() -> Markup {
+pub(crate) fn home(current_value: u16) -> Markup {
     html!(
         (DOCTYPE)
         html {
@@ -13,7 +13,7 @@ pub(crate) fn home() -> Markup {
             body {
                 .intro {
                     span { "Counter " }
-                    span.counter-button #targetme { (counter_value(0)) }
+                    span.counter-button #targetme { (counter_value(current_value)) }
                     span.htmx-indicator #spinner { " Saving" }
 
                     (increment_button("Increment", "/increment"))

@@ -10,6 +10,7 @@ axum = "0.7.4"
 include_dir = "0.7.3"
 maud = { version = "0.26.0", features = ["axum"] }
 serde = { version = "1.0.196", features = ["derive"] }
+libsql = { git = "https://github.com/tursodatabase/libsql" }
 shuttle-axum = "0.39.0"
 shuttle-runtime = "0.39.0"
 shuttle-secrets = "0.39.0"
