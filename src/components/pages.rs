@@ -1,15 +1,15 @@
-use super::counter::{counter_value, increment_button};
-use maud::{html, Markup, PreEscaped, DOCTYPE};
+use super::{
+    common::head,
+    counter::{counter_value, increment_button},
+};
+use maud::{html, Markup, DOCTYPE};
 
 pub(crate) fn home() -> Markup {
     html!(
         (DOCTYPE)
         html {
-            head {
-                (PreEscaped("<script src=\"https://unpkg.com/htmx.org@1.9.10\" crossorigin=\"anonymous\"></script>"))
-                (PreEscaped("<style>.leftpad { margin-left: 1em; }</style>"))
-                title { "Fred" }
-            }
+            (head("Counter"))
+
             body {
                 .intro {
                     span { "Counter " }
