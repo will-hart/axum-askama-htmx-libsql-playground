@@ -7,8 +7,11 @@ use axum::{
 use libsql::Builder;
 use shuttle_secrets::SecretStore;
 
+use crate::state::CounterUpdate;
+
 mod components;
 mod routes;
+mod sse;
 mod state;
 
 #[shuttle_runtime::main]
@@ -38,8 +41,12 @@ async fn main(#[shuttle_secrets::Secrets] secret_store: SecretStore) -> shuttle_
     .await
     .unwrap();
 
+    let (tx, rx) = tokio::sync::broadcast::channel::<CounterUpdate>(5);
+
     let mut state = state::AppState {
         db: Arc::new(Mutex::new(db)),
+        update_tx: Arc::new(tx),
+        update_rx: Arc::new(rx),
     };
     println!("COUNT: {:?}", state.get_counter_value().await);
 
@@ -49,6 +56,7 @@ async fn main(#[shuttle_secrets::Secrets] secret_store: SecretStore) -> shuttle_
         .route("/counter/:id", delete(routes::delete_counter_mutation))
         .route("/increment/:id", post(routes::increment_mutation))
         .route("/reset/:id", post(routes::reset_mutation))
+        .route("/updates", get(sse::sse_updates))
         .with_state(state);
 
     Ok(app.into())

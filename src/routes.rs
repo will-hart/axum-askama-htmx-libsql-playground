@@ -7,7 +7,7 @@ use axum::{
 
 use crate::{
     components::{self, counter},
-    state::AppState,
+    state::{AppState, CounterUpdate},
 };
 
 #[derive(Template)]
@@ -35,7 +35,13 @@ pub(crate) async fn add_counter_mutation(mut state: State<AppState>) -> impl Int
             .into_response();
     }
 
-    (StatusCode::OK, state.create_counter().await).into_response()
+    let response = state.create_counter().await;
+    state
+        .update_tx
+        .send(CounterUpdate::Created(response.id))
+        .unwrap();
+
+    (StatusCode::OK, response).into_response()
 }
 
 pub(crate) async fn delete_counter_mutation(

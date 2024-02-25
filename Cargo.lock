@@ -313,6 +313,8 @@ dependencies = [
  "shuttle-axum",
  "shuttle-runtime",
  "shuttle-secrets",
+ "tokio",
+ "tokio-stream",
 ]
 
 [[package]]
@@ -3409,6 +3411,7 @@ dependencies = [
  "futures-core",
  "pin-project-lite",
  "tokio",
+ "tokio-util",
 ]
 
 [[package]]

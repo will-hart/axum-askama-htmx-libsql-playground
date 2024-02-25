@@ -1,12 +1,22 @@
 use libsql::{Connection, Database};
+use tokio::sync::broadcast::{Receiver, Sender};
 
 use std::sync::{Arc, Mutex};
 
 use crate::components::counter::Counter;
 
+#[derive(Debug, Clone, Copy)]
+pub enum CounterUpdate {
+    NewValue(u32, u32),
+    Deleted(u32),
+    Created(u32),
+}
+
 #[derive(Clone)]
 pub(crate) struct AppState {
     pub db: Arc<Mutex<Database>>,
+    pub update_tx: Arc<Sender<CounterUpdate>>,
+    pub update_rx: Arc<Receiver<CounterUpdate>>,
 }
 
 impl AppState {

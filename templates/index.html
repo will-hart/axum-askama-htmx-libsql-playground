@@ -5,7 +5,7 @@
   </head>
 
   <body>
-    <div class="container">
+    <div class="container" hx-ext="sse" sse-connect="/updates">
       {% for counter in counters %}
         {% let id = counter.id %}
         {% let value = counter.value %}
