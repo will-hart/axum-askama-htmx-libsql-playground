@@ -10,10 +10,12 @@
         {% let id = counter.id %}
         {% let value = counter.value %}
         
-        {% include "partials/counter.html" %}
+        {% include "partials/counter/counter.html" %}
       {% endfor %}
 
       {% include "partials/add_button.html" %}
+
+      {% include "partials/counter/counter_summary.html" %}
     </div>
   </body>
 

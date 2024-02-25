@@ -1,0 +1,12 @@
+<div id="counter_summary">
+  {% for counter in counters %}
+  <div>
+    Counter #{{counter.id}} value 
+    <span 
+      style="font-weight: bold;"
+      id="counter-summary-value-{{counter.id}}">
+      {{counter.value}}
+    </span>
+  </div>
+  {% endfor %}
+</div>

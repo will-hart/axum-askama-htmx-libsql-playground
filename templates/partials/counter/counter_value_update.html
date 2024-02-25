@@ -1,0 +1,8 @@
+{% include "partials/counter/counter_value.html" %}
+<span 
+  style="font-weight: bold;"
+  hx-swap-oob="true"
+  id="counter-summary-value-{{id}}"
+  hx-swap="outerHTML">
+  {{value}}
+</span>
