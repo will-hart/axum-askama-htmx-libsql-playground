@@ -1,4 +1,4 @@
-use axum::extract::State;
+use axum::extract::{Path, State};
 
 use crate::{
     components::{self, counter},
@@ -12,10 +12,10 @@ pub(crate) async fn home_route_handler(
     crate::components::pages::index(current_value)
 }
 
-pub(crate) async fn increment_mutation(mut state: State<AppState>) -> String {
-    counter::counter_value(state.increment_counter().await)
+pub(crate) async fn increment_mutation(Path(id): Path<u32>, mut state: State<AppState>) -> String {
+    counter::counter_value(&state.increment_counter(id).await)
 }
 
-pub(crate) async fn reset_mutation(mut state: State<AppState>) -> String {
-    counter::counter_value(state.reset_counter().await)
+pub(crate) async fn reset_mutation(Path(id): Path<u32>, mut state: State<AppState>) -> String {
+    counter::counter_value(&state.reset_counter(id).await)
 }

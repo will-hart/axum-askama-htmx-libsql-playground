@@ -1,5 +1,5 @@
 <button class="leftpad counter-button"
-        hx-post="/increment"
+        hx-post="/increment/{{id}}"
         hx-indicator="#spinner"
         hx-disabled-elt=".counter-button"
         hx-target="#targetme"
@@ -7,7 +7,7 @@
   Increment
 </button>
 <button class="leftpad counter-button"
-        hx-post="/reset"
+        hx-post="/reset/{{id}}"
         hx-indicator="#spinner"
         hx-disabled-elt=".counter-button"
         hx-target="#targetme"

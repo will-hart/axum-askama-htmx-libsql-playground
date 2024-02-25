@@ -1,1 +1,1 @@
-SELECT value FROM counter WHERE id = ?1 LIMIT 1
+SELECT id, value FROM counter WHERE id = ?1 LIMIT 1

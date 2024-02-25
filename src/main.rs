@@ -35,8 +35,8 @@ async fn main(#[shuttle_secrets::Secrets] secret_store: SecretStore) -> shuttle_
         include_str!("../migrations/2_insert_initial_counter.sql"),
         (),
     )
-        .await
-        .unwrap();
+    .await
+    .unwrap();
 
     let mut state = state::AppState {
         db: Arc::new(Mutex::new(db)),
@@ -45,8 +45,8 @@ async fn main(#[shuttle_secrets::Secrets] secret_store: SecretStore) -> shuttle_
 
     let app = Router::new()
         .route("/", get(routes::home_route_handler))
-        .route("/increment", post(routes::increment_mutation))
-        .route("/reset", post(routes::reset_mutation))
+        .route("/increment/:id", post(routes::increment_mutation))
+        .route("/reset/:id", post(routes::reset_mutation))
         .with_state(state);
 
     Ok(app.into())
