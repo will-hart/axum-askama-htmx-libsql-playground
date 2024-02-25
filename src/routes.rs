@@ -4,6 +4,7 @@ use axum::{
     extract::{Path, State},
     http::StatusCode,
 };
+use axum_htmx::HxResponseTrigger;
 
 use crate::{
     components::{
@@ -45,14 +46,18 @@ pub(crate) async fn add_counter_mutation(mut state: State<AppState>) -> impl Int
 pub(crate) async fn delete_counter_mutation(
     Path(id): Path<u32>,
     mut state: State<AppState>,
-) -> StatusCode {
+) -> impl IntoResponse {
     if id == 1 {
-        return StatusCode::FORBIDDEN;
+        return StatusCode::FORBIDDEN.into_response();
     }
 
     match state.delete_counter(id).await {
-        Ok(_) => StatusCode::OK,
-        _ => StatusCode::INTERNAL_SERVER_ERROR,
+        Ok(_) => (
+            HxResponseTrigger::normal([format!("deleteCounter{id}")]),
+            StatusCode::OK,
+        )
+            .into_response(),
+        _ => StatusCode::INTERNAL_SERVER_ERROR.into_response(),
     }
 }
 

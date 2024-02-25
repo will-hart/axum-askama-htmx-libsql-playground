@@ -1,4 +1,4 @@
-<div id="counter-summary-{{id}}">
+<div id="counter-summary-{{id}}" hx-trigger="deleteCounter{{id}} from:body" hx-on::trigger="htmx.remove('#counter-summary-{{id}}')">
   Counter #{{id}} value 
   <span 
     style="font-weight: bold;"
