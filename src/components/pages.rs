@@ -1,25 +1,15 @@
-use super::{
-    common::head,
-    counter::{counter_value, increment_button},
-};
-use maud::{html, Markup, DOCTYPE};
+use askama::Template;
 
-pub(crate) fn home(current_value: u16) -> Markup {
-    html!(
-        (DOCTYPE)
-        html {
-            (head("Counter"))
+#[derive(Template)]
+#[template(path = "index.html")]
+pub struct IndexTemplate {
+    title: String,
+    current_value: u16,
+}
 
-            body {
-                .intro {
-                    span { "Counter " }
-                    span.counter-button #targetme { (counter_value(current_value)) }
-                    span.htmx-indicator #spinner { " Saving" }
-
-                    (increment_button("Increment", "/increment"))
-                    (increment_button("Reset", "/reset"))
-                }
-            }
-        }
-    )
+pub(crate) fn index(current_value: u16) -> IndexTemplate {
+    IndexTemplate {
+        title: "Counter".to_owned(),
+        current_value,
+    }
 }

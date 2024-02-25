@@ -1,0 +1,16 @@
+<button class="leftpad counter-button"
+        hx-post="/increment"
+        hx-indicator="#spinner"
+        hx-disabled-elt=".counter-button"
+        hx-target="#targetme"
+        hx-swap="innerHTML">
+  Increment
+</button>
+<button class="leftpad counter-button"
+        hx-post="/reset"
+        hx-indicator="#spinner"
+        hx-disabled-elt=".counter-button"
+        hx-target="#targetme"
+        hx-swap="innerHTML">
+Reset
+</button>

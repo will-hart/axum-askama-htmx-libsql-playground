@@ -6,9 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+askama = { version = "0.12", default-features = false, features = ["with-axum", "mime", "mime_guess"] }
+askama_axum = "0.4.0"
 axum = "0.7.4"
 include_dir = "0.7.3"
-maud = { version = "0.26.0", features = ["axum"] }
 serde = { version = "1.0.196", features = ["derive"] }
 libsql = { git = "https://github.com/tursodatabase/libsql" }
 shuttle-axum = "0.39.0"
