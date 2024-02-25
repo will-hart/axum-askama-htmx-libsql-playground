@@ -10,6 +10,37 @@ pub(crate) struct AppState {
 }
 
 impl AppState {
+    pub(crate) async fn get_counters(&mut self) -> Vec<Counter> {
+        let conn = self.db.lock().unwrap().connect().unwrap();
+        let mut stmt = conn
+            .prepare(include_str!("../sql/5_select_all_counters.sql"))
+            .await
+            .unwrap();
+
+        let mut output = vec![];
+        let mut rows = stmt.query(()).await.unwrap();
+
+        while let Ok(Some(row)) = rows.next().await {
+            output.push(libsql::de::from_row::<Counter>(&row).unwrap());
+        }
+
+        output
+    }
+
+    pub(crate) async fn create_counter(&mut self) -> Counter {
+        let conn = self.db.lock().unwrap().connect().unwrap();
+
+        let mut stmt = conn
+            .prepare(include_str!("../sql/4_create_counter.sql"))
+            .await
+            .unwrap();
+        let mut rows = stmt.query(()).await.unwrap();
+        let row = rows.next().await.unwrap().unwrap();
+        let id = row.get(0).unwrap();
+
+        Self::internal_get_counter_value(&conn, id).await
+    }
+
     pub(crate) async fn increment_counter(&mut self, id: u32) -> Counter {
         let conn = self.db.lock().unwrap().connect().unwrap();
 
@@ -45,8 +76,7 @@ impl AppState {
             .prepare(include_str!("../sql/3_select_counter_value.sql"))
             .await
             .unwrap();
-        let mut rows = stmt.query([id]).await.unwrap();
-        let row = rows.next().await.unwrap().unwrap();
+        let row = stmt.query_row([id]).await.unwrap();
         libsql::de::from_row(&row).expect("deserialize row to counter")
     }
 }

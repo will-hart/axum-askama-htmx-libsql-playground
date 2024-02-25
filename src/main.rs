@@ -45,6 +45,7 @@ async fn main(#[shuttle_secrets::Secrets] secret_store: SecretStore) -> shuttle_
 
     let app = Router::new()
         .route("/", get(routes::home_route_handler))
+        .route("/add-counter", post(routes::add_counter_mutation))
         .route("/increment/:id", post(routes::increment_mutation))
         .route("/reset/:id", post(routes::reset_mutation))
         .with_state(state);

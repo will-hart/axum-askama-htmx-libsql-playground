@@ -6,14 +6,12 @@ use super::counter::Counter;
 #[template(path = "index.html")]
 pub struct IndexTemplate {
     title: String,
-    id: u32,
-    current_value: u32,
+    counters: Vec<Counter>,
 }
 
-pub(crate) fn index(counter: Counter) -> IndexTemplate {
+pub(crate) fn index(counters: Vec<Counter>) -> IndexTemplate {
     IndexTemplate {
         title: "Counter".to_owned(),
-        id: counter.id,
-        current_value: counter.value,
+        counters,
     }
 }

@@ -1,6 +1,8 @@
+use askama::Template;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Template)]
+#[template(path = "partials/counter.html")]
 pub struct Counter {
     pub id: u32,
     pub value: u32,

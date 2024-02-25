@@ -2,7 +2,7 @@
         hx-post="/increment/{{id}}"
         hx-indicator="#spinner"
         hx-disabled-elt=".counter-button"
-        hx-target="#targetme"
+        hx-target="#counter-value-{{id}}"
         hx-swap="innerHTML">
   Increment
 </button>
@@ -10,7 +10,7 @@
         hx-post="/reset/{{id}}"
         hx-indicator="#spinner"
         hx-disabled-elt=".counter-button"
-        hx-target="#targetme"
+        hx-target="#counter-value-{{id}}"
         hx-swap="innerHTML">
 Reset
 </button>

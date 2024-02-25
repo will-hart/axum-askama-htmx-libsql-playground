@@ -5,8 +5,15 @@
   </head>
 
   <body>
-    <div class="intro">
-      {% include "partials/counter.html" %}
+    <div class="container">
+      {% for counter in counters %}
+        {% let id = counter.id %}
+        {% let value = counter.value %}
+        
+        {% include "partials/counter.html" %}
+      {% endfor %}
+
+      {% include "partials/add_button.html" %}
     </div>
   </body>
 

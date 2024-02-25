@@ -1,0 +1,1 @@
+SELECT id, value FROM counter ORDER BY id ASC LIMIT 100;
