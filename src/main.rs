@@ -28,7 +28,13 @@ async fn main(#[shuttle_secrets::Secrets] secret_store: SecretStore) -> shuttle_
     let db = Builder::new_remote(url, token).build().await.unwrap();
     let conn = db.connect().unwrap();
 
-    conn.execute(include_str!("../migrations/1_setup.sql"), ())
+    conn.execute(include_str!("../migrations/1_setup_tables.sql"), ())
+        .await
+        .unwrap();
+    conn.execute(
+        include_str!("../migrations/2_insert_initial_counter.sql"),
+        (),
+    )
         .await
         .unwrap();
 

@@ -3,9 +3,9 @@
 This is just me experimenting with some new-to-me web tools, including
 
 - shuttle (a rust foucsed solution for hosting rust apps),
-- htmx ([https://htmx.org]),
+- htmx ([https://htmx.org](https://htmx.org)),
 - askama templating (I usually use Tera),
-- turso (distributed edge SQLite for the new age, [https://turso.tech])
+- turso (distributed edge SQLite for the new age, [https://turso.tech](https://turso.tech))
 
 ## Set up
 
