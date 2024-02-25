@@ -41,6 +41,21 @@ impl AppState {
         Self::internal_get_counter_value(&conn, id).await
     }
 
+    pub(crate) async fn delete_counter(
+        &mut self,
+        id: u32,
+    ) -> std::result::Result<(), libsql::Error> {
+        let conn = self.db.lock().unwrap().connect().unwrap();
+
+        let mut stmt = conn
+            .prepare(include_str!("../sql/6_delete_counter.sql"))
+            .await
+            .unwrap();
+        stmt.execute([id]).await?;
+
+        Ok(())
+    }
+
     pub(crate) async fn increment_counter(&mut self, id: u32) -> Counter {
         let conn = self.db.lock().unwrap().connect().unwrap();
 

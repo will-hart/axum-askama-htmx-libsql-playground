@@ -1,7 +1,7 @@
 <button class="leftpad counter-button"
-        hx-post="/counter"
+        hx-delete="/counter/{{id}}"
         hx-disabled-elt="this"
-        hx-target="this"
+        hx-target="#counter-row-{{id}}"
         hx-swap="beforebegin">
 Add Counter
 </button>

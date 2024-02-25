@@ -1,16 +1,28 @@
 <button class="leftpad counter-button"
         hx-post="/increment/{{id}}"
-        hx-indicator="#spinner"
+        hx-indicator="#spinner-{{id}}"
         hx-disabled-elt=".counter-button"
         hx-target="#counter-value-{{id}}"
         hx-swap="innerHTML">
   Increment
 </button>
+
 <button class="leftpad counter-button"
         hx-post="/reset/{{id}}"
-        hx-indicator="#spinner"
+        hx-indicator="#spinner-{{id}}"
         hx-disabled-elt=".counter-button"
         hx-target="#counter-value-{{id}}"
         hx-swap="innerHTML">
 Reset
 </button>
+
+{% if id != 1 %}
+<button class="leftpad counter-button"
+        hx-delete="/counter/{{id}}"
+        hx-indicator="#spinner-{{id}}"
+        hx-disabled-elt="this"
+        hx-target="#counter-row-{{id}}"
+        hx-swap="outerHTML">
+Delete
+</button>
+{% endif %}

@@ -1,0 +1,1 @@
+DELETE FROM counter WHERE id = ?1;

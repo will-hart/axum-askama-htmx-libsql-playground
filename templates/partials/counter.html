@@ -1,7 +1,7 @@
-<div class="counter-row">
+<div class="counter-row" id="counter-row-{{id}}">
   <span>Counter #{{id}}: </span>
   <span class="counter-item" id="counter-value-{{id}}">{{value}}</span>
-  <span class="htmx-indicator" id="spinner"> Saving</span>
+  <span class="htmx-indicator" id="spinner-{{id}}"> Saving</span>
 
   {% include "partials/buttons.html" %}
 </div>
