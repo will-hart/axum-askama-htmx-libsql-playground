@@ -28,15 +28,9 @@ async fn main(#[shuttle_secrets::Secrets] secret_store: SecretStore) -> shuttle_
     let db = Builder::new_remote(url, token).build().await.unwrap();
     let conn = db.connect().unwrap();
 
-    conn.execute(
-        "CREATE TABLE IF NOT EXISTS counter (
-        id INT PRIMARY KEY AUTOINCREMENT,
-        count INT NOT NULL DEFAULT 0
-    )",
-        (),
-    )
-    .await
-    .unwrap();
+    conn.execute(include_str!("../migrations/1_setup.sql"), ())
+        .await
+        .unwrap();
 
     let mut state = state::AppState {
         db: Arc::new(Mutex::new(db)),

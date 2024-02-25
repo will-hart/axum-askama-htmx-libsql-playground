@@ -13,7 +13,7 @@ impl AppState {
         let conn = self.db.lock().unwrap().connect().unwrap();
 
         let mut stmt = conn
-            .prepare("UPDATE counter SET value = value + 1 WHERE ID = ?1")
+            .prepare(include_str!("../sql/1_increment_counter.sql"))
             .await
             .unwrap();
         stmt.execute([id]).await.unwrap();
@@ -26,10 +26,10 @@ impl AppState {
         let conn = self.db.lock().unwrap().connect().unwrap();
 
         let mut stmt = conn
-            .prepare("UPDATE counter SET value = 0 WHERE ID = ?1")
+            .prepare(include_str!("../sql/2_set_counter.sql"))
             .await
             .unwrap();
-        stmt.execute([id]).await.unwrap();
+        stmt.execute([0, id]).await.unwrap();
 
         Self::internal_get_counter_value(&conn, id).await
     }
@@ -42,7 +42,7 @@ impl AppState {
 
     async fn internal_get_counter_value(conn: &Connection, id: u32) -> u16 {
         let mut stmt = conn
-            .prepare("SELECT value FROM counter WHERE id = ?1 LIMIT 1")
+            .prepare(include_str!("../sql/3_select_counter_value.sql"))
             .await
             .unwrap();
         let mut rows = stmt.query([id]).await.unwrap();

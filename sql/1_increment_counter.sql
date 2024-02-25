@@ -1,0 +1,1 @@
+UPDATE counter SET value = value + 1 WHERE ID = ?1
