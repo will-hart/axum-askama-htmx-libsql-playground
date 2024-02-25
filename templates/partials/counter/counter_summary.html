@@ -1,12 +1,9 @@
 <div id="counter_summary">
   {% for counter in counters %}
-  <div>
-    Counter #{{counter.id}} value 
-    <span 
-      style="font-weight: bold;"
-      id="counter-summary-value-{{counter.id}}">
-      {{counter.value}}
-    </span>
-  </div>
+  
+  {% let id = counter.id %}
+  {% let value = counter.value %}
+  {% include "partials/counter/counter_summary_value.html" %}
+
   {% endfor %}
 </div>

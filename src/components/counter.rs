@@ -10,14 +10,30 @@ pub struct Counter {
 
 #[derive(Debug, Serialize, Deserialize, Template)]
 #[template(path = "partials/counter/counter_value_update.html")]
-pub struct CounterUpdateResponse {
+pub struct UpdateCounterResponse {
     pub id: u32,
     pub value: u32,
 }
 
-impl From<Counter> for CounterUpdateResponse {
+impl From<Counter> for UpdateCounterResponse {
     fn from(counter: Counter) -> Self {
-        CounterUpdateResponse {
+        UpdateCounterResponse {
+            id: counter.id,
+            value: counter.value,
+        }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize, Template)]
+#[template(path = "partials/counter/add_counter.html")]
+pub struct AddCounterResponse {
+    pub id: u32,
+    pub value: u32,
+}
+
+impl From<Counter> for AddCounterResponse {
+    fn from(counter: Counter) -> Self {
+        AddCounterResponse {
             id: counter.id,
             value: counter.value,
         }
