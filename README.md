@@ -17,6 +17,7 @@ bash
 curl -sSfL https://get.tur.so/install.sh | bash
 exit
 cargo install cargo-shuttle
+```
 
 ## Running locally
 
