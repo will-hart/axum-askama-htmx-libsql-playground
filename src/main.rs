@@ -6,6 +6,7 @@ use axum::{
 };
 use libsql::Builder;
 use shuttle_secrets::SecretStore;
+use tower_http::services::ServeDir;
 
 mod components;
 mod routes;
@@ -49,6 +50,7 @@ async fn main(#[shuttle_secrets::Secrets] secret_store: SecretStore) -> shuttle_
         .route("/counter/:id", delete(routes::delete_counter_mutation))
         .route("/increment/:id", post(routes::increment_mutation))
         .route("/reset/:id", post(routes::reset_mutation))
+        .nest_service("/assets", ServeDir::new("styles"))
         .with_state(state);
 
     Ok(app.into())

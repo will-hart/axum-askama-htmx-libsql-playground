@@ -16,3 +16,4 @@ libsql = { git = "https://github.com/tursodatabase/libsql" }
 shuttle-axum = "0.39.0"
 shuttle-runtime = "0.39.0"
 shuttle-secrets = "0.39.0"
+tower-http = { version = "0.5", features = ["fs"] }

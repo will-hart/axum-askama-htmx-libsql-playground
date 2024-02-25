@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.counter-row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1em;
+}
+
+.leftpad {
+  margin-left: 1em;
+}
+
+.counter-item {
+  margin-left: 2em;
+}
+
+.error {
+  background: rgb(214, 133, 133);
+}

@@ -1,1 +1,2 @@
 name = "whaxumtest"
+assets = ["styles/*"]
