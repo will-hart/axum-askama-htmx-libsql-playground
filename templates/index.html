@@ -6,6 +6,10 @@
 
   <body>
     <div class="container">
+      <h1>Crazy Counters with Axum/HTMX/Turso</h1>
+
+      {% include "partials/add_button.html" %}
+
       {% for counter in counters %}
         {% let id = counter.id %}
         {% let value = counter.value %}
@@ -13,8 +17,7 @@
         {% include "partials/counter/counter.html" %}
       {% endfor %}
 
-      {% include "partials/add_button.html" %}
-
+      <h2>Counter summary</h2>
       {% include "partials/counter/counter_summary.html" %}
     </div>
   </body>

@@ -1,6 +1,16 @@
+body {
+  background: #a8edea;
+  background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+  background-repeat: repeat-x;
+}
+
 .container {
   display: flex;
   flex-direction: column;
+  margin: 5%;
+  padding: 1em;
+  border-radius: 0.5em;
+  background: white;
 }
 
 .counter-row {
@@ -9,14 +19,49 @@
   margin-bottom: 1em;
 }
 
+#counter-summary {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.counter-summary-item {
+  margin-right: 1em;
+}
+
 .leftpad {
   margin-left: 1em;
 }
 
+.ypad {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.counter-header {
+  width: 100px;
+}
+
 .counter-item {
-  margin-left: 2em;
+  margin: 0 1em;
+  width: 50px;
+  text-align: center;
 }
 
 .error {
   background: rgb(214, 133, 133);
+}
+
+.my-indicator{
+  display: inline !important;
+  opacity: 1 !important;
+  color: black;
+  font-style: normal;
+}
+
+.htmx-request .my-indicator, .htmx-request.my-indicator{
+  display: inline;
+  opacity: 1;
+  color: #777;
+  font-style: italic;
 }
