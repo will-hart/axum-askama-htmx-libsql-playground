@@ -6,7 +6,7 @@ use axum::{
 };
 use libsql::Builder;
 use shuttle_secrets::SecretStore;
-use tower_http::services::ServeDir;
+use tower_http::{compression::CompressionLayer, services::ServeDir};
 
 mod components;
 mod routes;
@@ -51,7 +51,8 @@ async fn main(#[shuttle_secrets::Secrets] secret_store: SecretStore) -> shuttle_
         .route("/increment/:id", post(routes::increment_mutation))
         .route("/reset/:id", post(routes::reset_mutation))
         .nest_service("/assets", ServeDir::new("styles"))
-        .with_state(state);
+        .with_state(state)
+        .layer(CompressionLayer::default().gzip(true));
 
     Ok(app.into())
 }
